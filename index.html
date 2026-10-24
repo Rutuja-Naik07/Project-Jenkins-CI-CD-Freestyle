@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d2c">
+  <title>Once Upon a Pearl | Magical Movie Kingdom</title>
+
+  <style>
+    :root {
+      --bg: #100d2c;
+      --card: #211a45;
+      --pink: #ff83c8;
+      --gold: #ffd98b;
+      --cyan: #8cf4f0;
+      --white: #fff9ff;
+      --muted: #c7bddf;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 6%;
+      background: rgba(16, 13, 44, .94);
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .logo span { color: var(--pink); }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: .92rem;
+    }
+
+    .nav-links a:hover { color: var(--pink); }
+
+    .hero {
+      min-height: 590px;
+      padding: 90px 7%;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 85% 65%, #a13d9d66, transparent 35%),
+        radial-gradient(ellipse at 70% 30%, #147dba66, transparent 40%),
+        linear-gradient(115deg, #15102e, #24245b 55%, #49205b);
+    }
+
+    .hero::before {
+      content: "✦  ·  ✧  ·  ✦  ·  ✧  ·  ✦";
+      position: absolute;
+      inset: 8% 4% auto;
+      color: #ffe8b8;
+      font-size: 1.3rem;
+      letter-spacing: 2.4rem;
+      opacity: .65;
+      animation: twinkle 3s infinite alternate;
+    }
+
+    .hero::after {
+      content: "🫧";
+      position: absolute;
+      right: 10%;
+      top: 16%;
+      font-size: clamp(100px, 20vw, 250px);
+      opacity: .85;
+      filter: drop-shadow(0 0 40px #ff83c899);
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .hero-content { max-width: 640px; position: relative; z-index: 2; }
+
+    .eyebrow {
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: .8rem;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 6.5vw, 5.4rem);
+      line-height: 1.08;
+      margin: 18px 0;
+    }
+
+    h1 span {
+      color: var(--pink);
+      text-shadow: 0 0 35px #ff83c855;
+    }
+
+    .hero p { max-width: 520px; color: #e3daf7; font-size: 1.05rem; }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-weight: bold;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px #0005; }
+
+    .primary { background: linear-gradient(110deg, var(--pink), var(--gold)); color: #281139; }
+    .secondary { background: #ffffff18; border: 1px solid #ffffff66; color: white; }
+
+    .section { padding: 55px 6%; }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); }
+    .subtitle { color: var(--muted); margin-top: 4px; }
+
+    .featured {
+      margin: 0 6%;
+      padding: 28px;
+      border: 1px solid #ff83c866;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 90% 20%, #ff83c833, transparent 35%),
+        linear-gradient(120deg, #322052, #19264c);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .featured h2 { color: var(--gold); margin: 8px 0; }
+    .pearl { font-size: 5rem; filter: drop-shadow(0 0 22px #8cf4f0); }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+
+    .search {
+      flex: 1 1 220px;
+      min-width: 0;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #665a91;
+      background: #1c173b;
+      color: white;
+      outline: none;
+    }
+
+    .search:focus { border-color: var(--pink); }
+
+    .filter {
+      padding: 10px 15px;
+      border: 1px solid #554b7b;
+      border-radius: 999px;
+      background: #211a45;
+      color: white;
+    }
+
+    .filter.active { background: var(--pink); color: #281139; border-color: var(--pink); }
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .movie-card {
+      background: var(--card);
+      border: 1px solid #ffffff12;
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s;
+      min-width: 0;
+    }
+
+    .movie-card:hover { transform: translateY(-7px); border-color: #ff83c899; }
+
+    .poster {
+      height: 220px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      font-size: 5rem;
+      background: linear-gradient(145deg, var(--c1), var(--c2));
+    }
+
+    .poster::before, .poster::after {
+      content: "✧";
+      position: absolute;
+      color: #fff9;
+      font-size: 2rem;
+    }
+
+    .poster::before { top: 15px; left: 20px; }
+    .poster::after { bottom: 15px; right: 20px; }
+
+    .poster .emoji { filter: drop-shadow(0 8px 12px #0005); transition: transform .3s; }
+    .movie-card:hover .emoji { transform: scale(1.12) rotate(-4deg); }
+
+    .movie-info { padding: 17px; }
+    .movie-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
+    .meta { color: var(--muted); font-size: .82rem; }
+    .movie-info p { color: #ded5f0; font-size: .9rem; margin: 12px 0; }
+
+    .card-actions { display: flex; gap: 8px; }
+    .card-actions button { flex: 1; padding: 9px 7px; font-size: .83rem; }
+
+    .heart { color: var(--pink); }
+    .empty { display: none; color: var(--muted); padding: 30px 0; }
+
+    .magic-banner {
+      text-align: center;
+      margin: 15px 6% 60px;
+      padding: 50px 20px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #263e70, #69285e, #35245e);
+    }
+
+    .magic-banner h2 { color: var(--gold); margin-bottom: 10px; }
+
+    footer {
+      border-top: 1px solid #ffffff18;
+      padding: 28px 6%;
+      text-align: center;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      padding: 20px;
+      background: #08051bd9;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      width: min(500px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      background: #241b4b;
+      border: 1px solid #ff83c866;
+      border-radius: 22px;
+      padding: 28px;
+      position: relative;
+    }
+
+    .modal-art { font-size: 5rem; text-align: center; margin: 12px; }
+    .modal-box h2 { color: var(--gold); margin-bottom: 10px; }
+    .modal-box p { color: #e4dcf5; margin: 12px 0; }
+
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 12px;
+      background: transparent;
+      border: 0;
+      color: white;
+      font-size: 1.8rem;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-18px) rotate(5deg); }
+    }
+
+    @keyframes twinkle { from { opacity: .25; } to { opacity: .9; } }
+
+    @media (max-width: 1000px) {
+      .movie-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hero::after { right: 3%; opacity: .45; }
+    }
+
+    @media (max-width: 700px) {
+      .navbar { padding: 14px 5%; flex-wrap: wrap; }
+      .nav-links { width: 100%; justify-content: space-between; gap: 10px; }
+      .nav-links a { font-size: .82rem; }
+      .hero { min-height: 520px; padding: 75px 6%; }
+      .hero::after { right: -20px; top: 8%; opacity: .25; }
+      .featured { grid-template-columns: 1fr; padding: 23px; }
+      .pearl { display: none; }
+      .movie-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+      .poster { height: 170px; font-size: 4rem; }
+      .movie-info { padding: 12px; }
+      .movie-info h3 { font-size: 1rem; }
+      .card-actions { flex-direction: column; }
+    }
+
+    @media (max-width: 380px) {
+      .movie-grid { grid-template-columns: 1fr; }
+      .poster { height: 210px; }
+      .nav-links { flex-wrap: wrap; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="logo" href="#" style="text-decoration:none">✦ Once Upon a <span>Pearl</span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#movies">Movies</a>
+      <a href="#pearl">Pearl Princess</a>
+      <a href="#favorites">Favorites <span id="fav-count">(0)</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="eyebrow">✧ Enter a world of wonder ✧</div>
+        <h1>Every Pearl Holds a <span>Fairytale.</span></h1>
+        <p>
+          Discover enchanted kingdoms, brave princesses, magical oceans,
+          sparkling castles and stories that make your heart believe in magic.
+        </p>
+        <div class="actions">
+          <button class="btn primary" onclick="scrollToMovies()">✦ Explore Movies</button>
+          <button class="btn secondary" onclick="openMovie('pearl')">🫧 Meet the Pearl Princess</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="movies">
+      <div class="section-heading">
+        <div>
+          <h2>👑 The Fairytale Collection</h2>
+          <p class="subtitle">Choose a kingdom and let the magic begin.</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input class="search" id="search" type="search"
+          placeholder="🔍 Search princesses and movies..." aria-label="Search movies">
+        <button class="filter active" data-filter="All">All</button>
+        <button class="filter" data-filter="Ocean">Ocean</button>
+        <button class="filter" data-filter="Magic">Magic</button>
+        <button class="filter" data-filter="Adventure">Adventure</button>
+        <button class="filter" data-filter="Classic">Classic</button>
+      </div>
+
+      <div class="movie-grid" id="movie-grid"></div>
+      <p class="empty" id="empty">No fairytales found. Try another search! ✨</p>
+    </section>
+
+    <section class="featured" id="pearl">
+      <div>
+        <div class="eyebrow">A special original fantasy</div>
+        <h2>🫧 The Magical Pearl Princess</h2>
+        <p>
+          Deep beneath the Moonlit Ocean, a mysterious pearl awakens.
+          A young princess must restore the colors of the underwater kingdom
+          before the last star disappears from the sea.
+        </p>
+        <div class="actions">
+          <button class="btn primary" onclick="openMovie('pearl')">Discover Her Story ✨</button>
+          <button class="btn secondary" onclick="togglePearlFavorite()">♡ Save Fairytale</button>
+        </div>
+      </div>
+      <div class="pearl" aria-hidden="true">🧜‍♀️</div>
+    </section>
+
+    <section class="section" id="favorites">
+      <div class="section-heading">
+        <div>
+          <h2>💖 Your Favorite Fairytales</h2>
+          <p class="subtitle">Your saved magical worlds appear here.</p>
+        </div>
+      </div>
+      <div class="movie-grid" id="favorite-grid"></div>
+      <p class="empty" id="favorite-empty">Your collection is waiting! Tap ♡ on a movie to save it.</p>
+    </section>
+
+    <section class="magic-banner">
+      <div style="font-size:2.6rem">✨ 🐚 ✨</div>
+      <h2>Believe in a Little Magic</h2>
+      <p>Every great adventure begins with a dream and a little courage.</p>
+      <div class="actions" style="justify-content:center">
+        <button class="btn primary" onclick="scrollToMovies()">Find Your Fairytale</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>✦ Once Upon a Pearl ✦</p>
+    <p>A fan-made fairytale movie discovery demo. Not affiliated with Disney or any film studio.</p>
+    <p>Movie titles belong to their respective rights holders. No movies are streamed on this site.</p>
+  </footer>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true"
+       aria-labelledby="modal-title" onclick="if(event.target===this)closeModal()">
+    <div class="modal-box">
+      <button class="close" onclick="closeModal()" aria-label="Close dialog">×</button>
+      <div class="modal-art" id="modal-art">👑</div>
+      <h2 id="modal-title"></h2>
+      <div class="meta" id="modal-meta"></div>
+      <p id="modal-description"></p>
+      <button class="btn primary" onclick="toggleCurrentFavorite()">♡ Add to Favorites</button>
+      <button class="btn secondary" onclick="closeModal()">Back to Kingdom</button>
+    </div>
+  </div>
+
+  <script>
+    const movies = [
+      {id:"mermaid", title:"The Little Mermaid", year:1989, category:"Ocean", emoji:"🧜‍♀️", c1:"#087e9c", c2:"#493f9c",
+       desc:"Dive into an underwater fairytale about a curious mermaid who dreams of discovering life beyond her ocean home."},
+      {id:"frozen", title:"Frozen", year:2013, category:"Magic", emoji:"❄️", c1:"#73d8ee", c2:"#5367bc",
+       desc:"Journey through a snowy kingdom where sisterly love, courage and a little icy magic change everything."},
+      {id:"moana", title:"Moana", year:2016, category:"Adventure", emoji:"🌊", c1:"#00a99d", c2:"#20548d",
+       desc:"A brave island voyager crosses the ocean on an unforgettable quest to save her people."},
+      {id:"tangled", title:"Tangled", year:2010, category:"Magic", emoji:"🌸", c1:"#b94fba", c2:"#6042a0",
+       desc:"Follow a spirited young woman with magical golden hair as she discovers the world outside her tower."},
+      {id:"cinderella", title:"Cinderella", year:1950, category:"Classic", emoji:"👠", c1:"#7897e8", c2:"#b6a2ec",
+       desc:"A timeless story of kindness, a magical evening, a glass slipper and dreams that come true."},
+      {id:"beauty", title:"Beauty and the Beast", year:1991, category:"Classic", emoji:"🌹", c1:"#a52b52", c2:"#39285d",
+       desc:"An enchanted castle hides a rose, a mysterious curse and a story about seeing beauty within."},
+      {id:"snow", title:"Snow White", year:1937, category:"Classic", emoji:"🍎", c1:"#b9304d", c2:"#355e55",
+       desc:"A classic woodland fairytale filled with friendship, forest creatures and hope."},
+      {id:"sleeping", title:"Sleeping Beauty", year:1959, category:"Magic", emoji:"🏰", c1:"#bd70cf", c2:"#404d9d",
+       desc:"Explore an enchanted kingdom of spinning wheels, fairy magic and a castle hidden among thorns."},
+      {id:"brave", title:"Brave", year:2012, category:"Adventure", emoji:"🏹", c1:"#cb633b", c2:"#51472b",
+       desc:"A fearless archer follows her heart through misty Scottish highlands and learns the strength of family."},
+      {id:"aladdin", title:"Aladdin", year:1992, category:"Adventure", emoji:"🪔", c1:"#d68d32", c2:"#3d328a",
+       desc:"A magical lamp, a flying carpet and a daring adventure await in a dazzling faraway city."},
+      {id:"princessfrog", title:"The Princess and the Frog", year:2009, category:"Magic", emoji:"🐸", c1:"#35a982", c2:"#205b70",
+       desc:"Jazz-filled nights and bayou magic accompany a determined dreamer on an unexpected journey."},
+      {id:"pearl", title:"The Magical Pearl Princess", year:2026, category:"Ocean", emoji:"🫧", c1:"#2bcec6", c2:"#7b42bd",
+       desc:"An original fantasy concept: a young ocean princess discovers a glowing pearl and sets out to bring color and light back to her underwater kingdom."}
+    ];
+
+    let currentFilter = "All";
+    let currentMovie = null;
+    const favorites = new Set();
+
+    const grid = document.getElementById("movie-grid");
+    const favoriteGrid = document.getElementById("favorite-grid");
+    const search = document.getElementById("search");
+
+    function card(movie) {
+      const saved = favorites.has(movie.id);
+      return `
+        <article class="movie-card">
+          <div class="poster" style="--c1:${movie.c1};--c2:${movie.c2}">
+            <span class="emoji">${movie.emoji}</span>
+          </div>
+          <div class="movie-info">
+            <h3>${movie.title}</h3>
+            <div class="meta">${movie.year} · ${movie.category}</div>
+            <p>${movie.desc}</p>
+            <div class="card-actions">
+              <button class="btn primary" onclick="openMovie('${movie.id}')">Discover</button>
+              <button class="btn secondary heart" aria-label="${saved ? "Remove from" : "Add to"} favorites"
+                onclick="toggleFavorite('${movie.id}')">${saved ? "♥ Saved" : "♡ Favorite"}</button>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function renderMovies() {
+      const term = search.value.trim().toLowerCase();
+      const filtered = movies.filter(m =>
+        (currentFilter === "All" || m.category === currentFilter) &&
+        (m.title.toLowerCase().includes(term) ||
+         m.category.toLowerCase().includes(term) ||
+         m.desc.toLowerCase().includes(term))
+      );
+
+      grid.innerHTML = filtered.map(card).join("");
+      document.getElementById("empty").style.display = filtered.length ? "none" : "block";
+
+      const savedMovies = movies.filter(m => favorites.has(m.id));
+      favoriteGrid.innerHTML = savedMovies.map(card).join("");
+      document.getElementById("favorite-empty").style.display = savedMovies.length ? "none" : "block";
+      document.getElementById("fav-count").textContent = `(${favorites.size})`;
+    }
+
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        currentFilter = button.dataset.filter;
+        document.querySelectorAll(".filter").forEach(b => b.classList.toggle("active", b === button));
+        renderMovies();
+      });
+    });
+
+    search.addEventListener("input", renderMovies);
+
+    function toggleFavorite(id) {
+      favorites.has(id) ? favorites.delete(id) : favorites.add(id);
+      renderMovies();
+    }
+
+    function togglePearlFavorite() { toggleFavorite("pearl"); }
+
+    function openMovie(id) {
+      const movie = movies.find(m => m.id === id);
+      if (!movie) return;
+      currentMovie = id;
+      document.getElementById("modal-art").textContent = movie.emoji;
+      document.getElementById("modal-title").textContent = movie.title;
+      document.getElementById("modal-meta").textContent = `${movie.year} · ${movie.category}`;
+      document.getElementById("modal-description").textContent = movie.desc;
+      document.getElementById("modal").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function toggleCurrentFavorite() {
+      if (currentMovie) toggleFavorite(currentMovie);
+      const button = document.querySelector(".modal-box .primary");
+      button.textContent = favorites.has(currentMovie) ? "♥ Saved to Favorites" : "♡ Add to Favorites";
+    }
+
+    function scrollToMovies() {
+      document.getElementById("movies").scrollIntoView({behavior:"smooth"});
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeModal();
+    });
+
+    renderMovies();
+  </script>
+</body>
+</html>
+
